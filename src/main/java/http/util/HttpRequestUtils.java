@@ -10,10 +10,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class HttpRequestUtils {
-    public static final int MAX_PATH_INDEX = 2;
-    public static final int URL_PATH_INDEX = 1;
-    public static final int MAX_LENGTH_INDEX = 2;
-    private static final int URL_LENGTH_INDEX = 1;
 
     public static Map<String, String> parseQueryParameter(String queryString) {
         try {
@@ -25,22 +21,6 @@ public class HttpRequestUtils {
         } catch (Exception e) {
             return new HashMap<>();
         }
-    }
-
-    public static String extractPath(String line) {
-        String[] tokens = line.split(" ");
-        if (tokens.length < MAX_PATH_INDEX) {
-            throw new IllegalArgumentException("Invalid Request Line: " + line);
-        }
-        return tokens[URL_PATH_INDEX];
-    }
-
-    public static int extractLength(String line) {
-        String[] tokens = line.split(":");
-        if (tokens.length < MAX_LENGTH_INDEX) {
-            throw new IllegalArgumentException("Invalid Request Line: " + line);
-        }
-        return Integer.parseInt(tokens[URL_LENGTH_INDEX].trim());
     }
 
     public static byte[] readPath(String path, String url) throws IOException {
