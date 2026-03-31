@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 
 
 public class HttpResponse {
-    private static final Logger log = Logger.getLogger(RequestHandler.class.getName());
+    private static final Logger log = Logger.getLogger(HttpResponse.class.getName());
     private final DataOutputStream dos;
     private final Map<String, String> headers = new HashMap<>();
 

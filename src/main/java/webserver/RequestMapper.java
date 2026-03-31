@@ -6,6 +6,7 @@ import controller.HomeController;
 import controller.ListController;
 import controller.LoginController;
 import controller.SignUpController;
+import enumfile.URL;
 
 public class RequestMapper {
     private final HttpRequest httpRequest;
@@ -26,15 +27,15 @@ public class RequestMapper {
             controller = new HomeController();
         }
 
-        if (httpRequest.getUrl().equals("/user/signup")) {
+        if (httpRequest.getUrl().equals(URL.SIGN_UP.getLink())) {
             controller = new SignUpController();
         }
 
-        if (httpRequest.getUrl().equals("/user/login")) {
+        if (httpRequest.getUrl().equals(URL.LOGIN.getLink())) {
             controller = new LoginController();
         }
 
-        if (httpRequest.getUrl().equals("/user/userList")) {
+        if (httpRequest.getUrl().equals(URL.LIST.getLink())) {
             controller = new ListController();
         }
         controller.execute(httpRequest, httpResponse);

@@ -16,6 +16,6 @@ public class ListController implements Controller {
             response.sendRedirect(URL.TRY_LOGIN_LINK.getLink());
             return;
         }
-        response.forward(url);
+        response.sendRedirect(URL.LISTLINK.getLink());
     }
 }

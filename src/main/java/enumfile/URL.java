@@ -8,6 +8,7 @@ public enum URL {
     CSS("text/css"),
     HTML("text/html;charset=utf-8"),
     LIST("/user/userList"),
+    LISTLINK("/user/list.html"),
     WEBAPP("/webapp"),
     INDEX("/index.html");
 
