@@ -1,6 +1,5 @@
 package controller;
 
-import db.MemoryUserRepository;
 import db.Repository;
 import enumfile.CheckCookie;
 import enumfile.HttpHeader;
