@@ -5,7 +5,6 @@ import enumfile.HeaderIndex;
 import enumfile.HttpHeader;
 import enumfile.HttpMethod;
 import http.util.IOUtils;
-import enumfile.Login;
 import enumfile.PathIndex;
 
 import java.io.BufferedReader;
@@ -19,7 +18,7 @@ public class HttpRequest {
     private String path;
     private final Map<String, String> headers = new HashMap<>();
     private String body;
-    private static String cookie;
+    private String cookie;
 
     public static HttpRequest from(BufferedReader br) throws IOException {
         HttpRequest request = new HttpRequest();
@@ -42,7 +41,7 @@ public class HttpRequest {
             }
         }
 
-        cookie = request.headers.getOrDefault(HttpHeader.COOKIE.getHeader(), CheckCookie.LOGIN_FALSE.getLoginCookie());
+        request.cookie = request.headers.getOrDefault(HttpHeader.COOKIE.getHeader(), CheckCookie.LOGIN_FALSE.getLoginCookie());
 
         if (HttpMethod.POST.getMethod().equals(request.method)) {
             int contentLength = Integer.parseInt(request.headers.getOrDefault(HttpHeader.CONTENT_LENGTH.getHeader(), "0"));
@@ -56,7 +55,7 @@ public class HttpRequest {
         return method;
     }
 
-    public String getUrl() {
+    public String getPath() {
         return path;
     }
 
@@ -64,8 +63,7 @@ public class HttpRequest {
         return body;
     }
 
-    public int checkCookie() {
-        if(cookie.equals(CheckCookie.LOGIN_TRUE.getLoginCookie())) return Login.LOGIN_SUCCESS.getFlag();
-        return Login.UNDEFINED.getFlag();
+    public String getCookie() {
+        return cookie;
     }
 }

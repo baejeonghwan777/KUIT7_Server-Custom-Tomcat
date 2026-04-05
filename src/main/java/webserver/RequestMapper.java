@@ -6,12 +6,15 @@ import controller.HomeController;
 import controller.ListController;
 import controller.LoginController;
 import controller.SignUpController;
+import db.MemoryUserRepository;
+import db.Repository;
 import enumfile.URL;
 
 public class RequestMapper {
     private final HttpRequest httpRequest;
     private final HttpResponse httpResponse;
     private Controller controller = new ForwardController();
+    Repository repository = MemoryUserRepository.getInstance();
 
     public RequestMapper(HttpRequest httpRequest, HttpResponse httpResponse) {
         this.httpRequest = httpRequest;
@@ -19,23 +22,23 @@ public class RequestMapper {
     }
 
     public void proceed() {
-        if (httpRequest.getMethod().equals("GET") && httpRequest.getUrl().endsWith(".html")) {
+        if (httpRequest.getMethod().equals("GET") && httpRequest.getPath().endsWith(".html")) {
             controller = new ForwardController();
         }
 
-        if (httpRequest.getUrl().equals("/")) {
+        if (httpRequest.getPath().equals("/")) {
             controller = new HomeController();
         }
 
-        if (httpRequest.getUrl().equals(URL.SIGN_UP.getLink())) {
-            controller = new SignUpController();
+        if (httpRequest.getPath().equals(URL.SIGN_UP.getLink())) {
+            controller = new SignUpController(repository);
         }
 
-        if (httpRequest.getUrl().equals(URL.LOGIN.getLink())) {
-            controller = new LoginController();
+        if (httpRequest.getPath().equals(URL.LOGIN.getLink())) {
+            controller = new LoginController(repository);
         }
 
-        if (httpRequest.getUrl().equals(URL.LIST.getLink())) {
+        if (httpRequest.getPath().equals(URL.LIST.getLink())) {
             controller = new ListController();
         }
         controller.execute(httpRequest, httpResponse);

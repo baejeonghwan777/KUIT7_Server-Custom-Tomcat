@@ -1,6 +1,7 @@
 package controller;
 
 import db.MemoryUserRepository;
+import db.Repository;
 import enumfile.CheckCookie;
 import enumfile.HttpHeader;
 import enumfile.Login;
@@ -16,6 +17,11 @@ import static http.util.HttpRequestUtils.parseQueryParameter;
 
 public class LoginController implements Controller {
     int loginBeforeFlag = Login.UNDEFINED.getFlag();
+    Repository repository;
+
+    public LoginController(Repository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public void execute(HttpRequest request, HttpResponse response) {
@@ -35,7 +41,7 @@ public class LoginController implements Controller {
         String userId = QueryKey.USERID.safeDecode(userInstance);
         String password = QueryKey.PASSWORD.safeDecode(userInstance);
 
-        User user = MemoryUserRepository.getInstance().findUserById(userId);
+        User user = repository.findUserById(userId);
         if(user == null) return Login.LOGIN_FAIL.getFlag();
         if(!user.getPassword().equals(password)) return Login.LOGIN_FAIL.getFlag();
         return Login.LOGIN_SUCCESS.getFlag();

@@ -37,7 +37,7 @@ public class HttpResponse {
 
     public void sendRedirect(String redirectUrl) {
         try {
-            dos.writeBytes("HTTP/1.1 302 Found \r\n");
+            responseCode("302","FOUND");
             dos.writeBytes("Location: " + redirectUrl + "\r\n");
             processHeaders();
             dos.writeBytes("\r\n");
@@ -53,7 +53,7 @@ public class HttpResponse {
 
     private void response200Header(int lengthOfBodyContent) {
         try {
-            dos.writeBytes("HTTP/1.1 200 OK \r\n");
+            responseCode("200","OK");
             processHeaders();
             dos.writeBytes("Content-Length: " + lengthOfBodyContent + "\r\n");
             dos.writeBytes("\r\n");
@@ -75,5 +75,9 @@ public class HttpResponse {
         for (String key : headers.keySet()) {
             dos.writeBytes(key + ": " + headers.get(key) + "\r\n");
         }
+    }
+
+    private void responseCode(String statusCode, String statusMessage) throws IOException {
+        dos.writeBytes("HTTP/1.1 " + statusCode + " " + statusMessage + "\r\n");
     }
 }
